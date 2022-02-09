@@ -1,0 +1,13 @@
+
+// for this months expenses
+select * from et_expense where date between date_trunc('month', current_date) and date_trunc('month', current_date) + interval '1 month' and user_id = 'testid' order by date ,time desc;
+
+// for this week expense
+select * from et_expense where date between date_trunc('week', current_date) and date_trunc('week', current_date) + interval '1 week' and user_id = 'testid' order by date ,time desc;
+
+// for todays expense
+select * from et_expense where date = current_date and user_id = 'testid' order by date ,time desc;
+
+
+// for categories in ad new expense 
+select distinct category from et_expense where user_id = 'testid';
