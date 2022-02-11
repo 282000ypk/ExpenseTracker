@@ -177,9 +177,13 @@ public class ExpenseDAO {
 			{
 				query = "select id, amount, date, time, description, category, transaction_type from et_expense where date between date_trunc('week', current_date) and date_trunc('week', current_date) + interval '1 week' and user_id = '" + user.getId() + "' order by date ,time desc;";
 			}
-			else
+			else if(duration.equals("month"))
 			{
 				query = "select id, amount, date, time, description, category, transaction_type from et_expense where date between date_trunc('month', current_date) and date_trunc('month', current_date) + interval '1 month' and user_id = '" + user.getId() + "' order by date ,time desc;";
+			}
+			else
+			{
+				query = "select id, amount, date, time, description, category, transaction_type from et_expense where user_id = '"+ user.getId() +"'";
 			}
 			ResultSet rs = st.executeQuery(query);
 			while(rs.next())

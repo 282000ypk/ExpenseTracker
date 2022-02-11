@@ -16,7 +16,7 @@ color: red;
 	<h2>No Transactions Made ${duartion}</h2>
 	<%} %>
 	<c:forEach items="${transactions }" var="transaction">
-		<div>
+		<div class="card">
 		<a href="/ExpenseTracker/Dashboard/edit?id=${transaction.getId()}">Edit Logo</a>
 		<a href="/ExpenseTracker/Dashboard/delete?id=${transaction.getId()}">Delete Logo</a>
 		<details>

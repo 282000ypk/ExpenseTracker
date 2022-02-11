@@ -4,30 +4,36 @@
 	<%@ include file = "/static_content/header.jsp"%>
 	<h1>Dashboard</h1>
 	<div class=box1>
-	<div class = "card" onclick="getalltransactions('day')">
-		<p>Credits for today</p>
-		<p>${dashboard_data.get("credit_for_today")}</p>
-	</div>
-	<div class = "card">
-		<p>Debits for today</p>
-		<p>${dashboard_data.get("debit_for_today")}</p>
-	</div>
-	<div class = "card" onclick="getalltransactions('week')">
-		<p>Debit for this week</p>
-		<p>${dashboard_data.get("debit_for_week")}</p>
-	</div>
-	<div class = "card">
-		<p>Credit for this week</p>
-		<p>${dashboard_data.get("credit_for_week")}</p>
-	</div>
-	<div class = "card">
-		<p>Debit for this Month</p>
-		<p>${dashboard_data.get("debit_for_month")}</p>
-	</div>
-	<div class = "card" onclick="getalltransactions('month')">
-		<p>Credit for this Month</p>
-		<p>${dashboard_data.get("credit_for_month")}</p>
-	</div>
+		<div onclick="getalltransactions('day')">
+			<div class = "card" >
+				<p>Credits for today</p>
+				<p>${dashboard_data.get("credit_for_today")}</p>
+			</div>
+			<div class = "card">
+				<p>Debits for today</p>
+				<p>${dashboard_data.get("debit_for_today")}</p>
+			</div>
+		</div>
+		<div onclick="getalltransactions('week')">
+			<div class = "card" >
+				<p>Debit for this week</p>
+				<p>${dashboard_data.get("debit_for_week")}</p>
+			</div>
+			<div class = "card">
+				<p>Credit for this week</p>
+				<p>${dashboard_data.get("credit_for_week")}</p>
+			</div>
+		</div>
+		<div onclick="getalltransactions('month')">
+			<div class = "card">
+				<p>Debit for this Month</p>
+				<p>${dashboard_data.get("debit_for_month")}</p>
+			</div>
+			<div class = "card" >
+				<p>Credit for this Month</p>
+				<p>${dashboard_data.get("credit_for_month")}</p>
+			</div>
+		</div>
 	</div>
 	
 	<div class=box2>
@@ -50,5 +56,3 @@
 		}
 	</script>
 	<%@ include file = "/static_content/footer.jsp"%>
-</body>
-</html>

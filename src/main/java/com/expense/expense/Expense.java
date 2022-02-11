@@ -89,6 +89,8 @@ public class Expense {
 		return ExpenseDAO.getAllExpense(user);
 	}
 	
+	
+	
 	public static HashMap<String, Double> getDashboardData(User user)
 	{
 		return ExpenseDAO.getDashboardData(user);
@@ -120,4 +122,10 @@ public class Expense {
 	{
 		return ExpenseDAO.editExpense(user, amount, description, category, date, time, transaction_type, id);
 	}
+	
+	public static ArrayList<Expense> findExpense(User user)
+	{
+		return new ArrayList<Expense>();
+	}
+	
 }

@@ -42,7 +42,7 @@ public class DashboardController extends HttpServlet {
 					request.setAttribute("transactions", allexpense);
 					duration = (duration.equals("day"))? "Today": duration;
 					duration = (duration.equals("week"))? "This Week": duration;
-					duration = (duration.equals("Month"))? "This Month": duration;
+					duration = (duration.equals("month"))? "This Month": duration;
 					request.setAttribute("duartion", duration);
 					RequestDispatcher dispatcher = request.getRequestDispatcher("/history.jsp");
 					dispatcher.forward(request, response);
@@ -51,6 +51,11 @@ public class DashboardController extends HttpServlet {
 				if(path.equals("/Search"))
 				{
 					request.setAttribute("title", "Search Transactions");
+					ArrayList<Expense> this_month_expense = Expense.getExpenseByDuration(user, "month");
+					request.setAttribute("Expense", this_month_expense);
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/search.jsp");
+					dispatcher.forward(request, response);
+					return;
 				}
 				
 				else if(path.equals("/Overview"))
@@ -123,6 +128,8 @@ public class DashboardController extends HttpServlet {
 						int id = Integer.parseInt(request.getParameter("id"));
 						Expense expense = Expense.getById(user, id);
 						request.setAttribute("transaction", expense);
+						ArrayList<String> categories = Expense.getCategories(user);
+						request.setAttribute("categories", categories);
 						RequestDispatcher dispatcher = request.getRequestDispatcher("/edit.jsp");
 						dispatcher.forward(request, response);
 						return;
