@@ -42,7 +42,6 @@
 			{
 				if(this.readyState == 4 && this.status == 200)
 					{
-					console.log(ajax.responseText)
 					document.querySelector(".box2").innerHTML = ajax.responseText;
 					}
 			}

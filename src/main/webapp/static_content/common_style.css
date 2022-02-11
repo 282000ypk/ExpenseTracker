@@ -4,6 +4,13 @@
 	padding: 0px;
 	box-sizing: border-box;
 }
+body
+{
+	min-height: 100vh;
+	position: relative;
+	padding-bottom: 200px;
+}
+
 header
 {
 	min-height: 100px;
@@ -105,8 +112,21 @@ footer
 	justify-content: space-between;
 	align-items: center;
 	flex-wrap: wrap;
-	border: 2px solid;
+	background: #555;
+	color: white;
+	position: absolute;
+	bottom: 0px;
 }
+footer a
+{
+	text-decoration: none;
+	color: white;
+	height: 2ch;
+	min-width: 100px;
+	border-left: 2px solid white;
+	padding: 5px;
+}
+
 .alert
 {
 	position: absolute;

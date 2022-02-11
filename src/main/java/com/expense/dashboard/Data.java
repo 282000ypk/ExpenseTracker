@@ -125,12 +125,17 @@ public class Data {
 		public void setBorderWidth(int borderWidth) {
 			this.borderWidth = borderWidth;
 		}
-		
-		@Override
-		public String toString() {
-			return new Gson().toJson(this);
-		}
-		
+	}
+
+
+	public static Data getCredits() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static Data getDebits() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

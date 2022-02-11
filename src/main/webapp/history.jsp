@@ -13,10 +13,12 @@ color: red;
 </style>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 	<%if( ((ArrayList)request.getAttribute("transactions")).size() == 0 ) { %>
-	<h2>No Transactions Made today</h2>
+	<h2>No Transactions Made ${duartion}</h2>
 	<%} %>
 	<c:forEach items="${transactions }" var="transaction">
 		<div>
+		<a href="/ExpenseTracker/Dashboard/edit?id=${transaction.getId()}">Edit Logo</a>
+		<a href="/ExpenseTracker/Dashboard/delete?id=${transaction.getId()}">Delete Logo</a>
 		<details>
 			<summary>
 					<c:if test="${transaction.getTransaction_type().equals(\"credit\")}">

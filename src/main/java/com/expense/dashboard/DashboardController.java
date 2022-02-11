@@ -33,28 +33,36 @@ public class DashboardController extends HttpServlet {
 				User user = (User) httpsession.getAttribute("user");
 				request.setAttribute("user", user);
 				String path = (request.getPathInfo() != null) ? request.getPathInfo() : "";
-				
 				if(path.equals("/History"))
 				{
-					
+					request.setAttribute("title", "Transaction History");
 					// more code for filter
 					String duration = (request.getParameter("duration") == null)? "day" : (request.getParameter("duration"));
 					ArrayList<Expense> allexpense = Expense.getExpenseByDuration(user, duration);
 					request.setAttribute("transactions", allexpense);
+					duration = (duration.equals("day"))? "Today": duration;
+					duration = (duration.equals("week"))? "This Week": duration;
+					duration = (duration.equals("Month"))? "This Month": duration;
+					request.setAttribute("duartion", duration);
 					RequestDispatcher dispatcher = request.getRequestDispatcher("/history.jsp");
 					dispatcher.forward(request, response);
 					return;
 				}
+				if(path.equals("/Search"))
+				{
+					request.setAttribute("title", "Search Transactions");
+				}
 				
 				else if(path.equals("/Overview"))
 				{
-					
+					request.setAttribute("title", "Overview of Transactions");
 					RequestDispatcher dispatcher = request.getRequestDispatcher("/overview.jsp");
 					dispatcher.forward(request, response);
 					return;
 				}
 				else if(path.equals("/Newtransaction"))
 				{
+					request.setAttribute("title", "Add New Transaction");
 					ArrayList<String> categories = Expense.getCategories(user);
 					request.setAttribute("categories", categories);
 					RequestDispatcher dispatcher = request.getRequestDispatcher("/newtransaction.jsp");
@@ -83,6 +91,77 @@ public class DashboardController extends HttpServlet {
 						request.setAttribute("message", "Oops! failed to add Transaction");
 					}
 				}
+				
+				// edit transaction
+				else if(path.equals("/Edittransaction"))
+				{
+					// retrive attributes
+					double amount = (request.getParameter("et_amount") == null) ? 0 : (Double.parseDouble((String) request.getParameter("et_amount")));
+					String description = (request.getParameter("et_description") == null) ? "" : (String) request.getParameter("et_description");
+					String category = (request.getParameter("et_category") == null)? "" : (String) request.getParameter("et_category");
+					String transaction_type = (request.getParameter("et_transactiontype") == null) ? "" : (String) request.getParameter("et_transactiontype");
+					String date = (request.getParameter("et_date") == null) ? "current_date" : (String) request.getParameter("et_date");
+					String time = (request.getParameter("et_time") == null) ? "current_time" : (String) request.getParameter("et_time");
+					int id = (request.getParameter("et_id") == null) ? -1 : Integer.parseInt(request.getParameter("et_id"));
+					if(Expense.editExpense(user, amount, description, category, date, time, transaction_type, id) && id != -1)
+					{
+						request.setAttribute("alert", "success");
+						request.setAttribute("message", "Transaction Edited Successfully");
+					}
+					else
+					{
+						request.setAttribute("alert", "failure");
+						request.setAttribute("message", "Oops! failed to Edit Transaction");
+					}
+				}
+				else if(path.equals("/edit"))
+				{
+					PrintWriter out = response.getWriter();
+					try
+					{
+						request.setAttribute("title", "Edit Transaction");
+						int id = Integer.parseInt(request.getParameter("id"));
+						Expense expense = Expense.getById(user, id);
+						request.setAttribute("transaction", expense);
+						RequestDispatcher dispatcher = request.getRequestDispatcher("/edit.jsp");
+						dispatcher.forward(request, response);
+						return;
+					}
+					catch(Exception e)
+					{
+						e.printStackTrace();
+						RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+						dispatcher.forward(request, response);
+						return;
+					}
+				}
+				
+				else if(path.equals("/delete"))
+				{
+					PrintWriter out = response.getWriter();
+					try
+					{
+						int id = Integer.parseInt(request.getParameter("id"));
+						if(Expense.deleteExpense(id))
+						{
+							request.setAttribute("alert", "success");
+							request.setAttribute("message", "Transaction Deleted Successfully");
+						}
+						else
+						{
+							request.setAttribute("alert", "failure");
+							request.setAttribute("message", "Oops! failed to Delete Transaction");
+						}
+					}
+					catch(Exception e)
+					{
+						e.printStackTrace();
+						RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+						dispatcher.forward(request, response);
+						return;
+					}
+				}
+				request.setAttribute("title", "DashBoard");
 				HashMap<String, Double> dashboard_data = Expense.getDashboardData(user);
 				request.setAttribute("dashboard_data", dashboard_data);
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/dashboard.jsp");

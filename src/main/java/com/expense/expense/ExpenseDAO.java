@@ -208,4 +208,92 @@ public class ExpenseDAO {
 			DBCon.close();
 		}
 	}
+	
+	public static Expense getById(User user, int id)
+	{
+		Expense expense = null;
+		try
+		{
+			ExpenseDAO.con = DBCon.getConnection();
+			Statement st = ExpenseDAO.con.createStatement();
+			String query = "select id, amount, date, time, description, category, transaction_type from et_expense where id = " + id;
+			ResultSet rs = st.executeQuery(query);
+			if(rs.next())
+			{
+				int eid = Integer.parseInt(rs.getString(1));
+				double amount = Double.parseDouble(rs.getString(2));
+				String date = rs.getString(3);
+				String time = rs.getString(4);
+				String description = rs.getString(5);
+				String category = rs.getString(6);
+				String transaction_type = rs.getString(7);
+				expense = new Expense(eid, amount, date, time, description, category, transaction_type);
+			}
+			return  expense;
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+			return  expense;
+		}
+		finally
+		{
+			DBCon.close();
+		}
+	}
+	
+	public static boolean deleteById(int id)
+	{
+		try
+		{
+			ExpenseDAO.con = DBCon.getConnection();
+			String query = "delete from et_expense where id = ?";
+			PreparedStatement st = ExpenseDAO.con.prepareStatement(query);
+			st.setInt(1, id);
+			if(st.executeUpdate() == 1)
+			{
+				return true;
+			}
+			return  false;
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+			return  false;
+		}
+		finally
+		{
+			DBCon.close();
+		}
+	}
+
+	public static boolean editExpense(User user, double amount, String description, String category, String date,String time, String transaction_type, int id) {
+		try
+		{
+			ExpenseDAO.con = DBCon.getConnection();
+			// update et_expense set amount = ? ,description = ?, category = ?, date = ?, time = ?, transaction_type = ?  where id = ? and user_id = ?
+			String query = "update et_expense set amount = ? ,description = ?, category = ?, date = '"+ date +"', time = '"+ time +"', transaction_type = ?  where id = ? and user_id = ?";
+			PreparedStatement st = ExpenseDAO.con.prepareStatement(query);
+			st.setDouble(1, amount);
+			st.setString(2, description);
+			st.setString(3, category);
+			st.setString(4, transaction_type);
+			st.setInt(5, id);
+			st.setString(6, user.getId());
+			if(st.executeUpdate() == 1)
+			{
+				return true;
+			}
+			return  false;
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+			return  false;
+		}
+		finally
+		{
+			DBCon.close();
+		}
+	}
 } 

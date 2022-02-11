@@ -5,11 +5,21 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 
 public class ChartData {
-	private String type = "pie";
+	private String type = "doughnut";
 	private Data data = new Data();
-	private Options options = null;
+	
 
-
+	public ChartData(String type) {
+		if(type.equals("credit"))
+		{
+			this.data = Data.getCredits();
+		}
+		else
+		{
+			this.data = Data.getDebits();
+		}
+	}
+	
 	public String getType() {
 		return type;
 	}
@@ -22,17 +32,4 @@ public class ChartData {
 	public void setData(Data data) {
 		this.data = data;
 	}
-	public Options getOptions() {
-		return options;
-	}
-	public void setOptions(Options options) {
-		this.options = options;
-	}
-	@Override
-	public String toString() {
-		return "ChartData [type=" + type + ", data=" + data + ", options=" + options + "]";
-	}
-	
-	
-	
 }

@@ -8,20 +8,8 @@
 </head>
 <body>
 	
-	<script>
-		var data
-		var ajax = new XMLHttpRequest();
-		ajax.onreadystatechange = function()
-		{
-			if(this.readyState == 4 && this.status == 200)
-				{
-				console.log(ajax.responseText)
-				document.querySelector("body").innerHTML = ajax.responseText;
-				}
-		}
-		ajax.open("post", "./Dashboard/History", true);
-		ajax.send();
-		
-	</script>
+	test
+	
+	${transaction }
 </body>
 </html>

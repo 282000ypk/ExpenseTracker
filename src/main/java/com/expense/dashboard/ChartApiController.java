@@ -18,16 +18,22 @@ import com.google.gson.Gson;
 @WebServlet("/ChartData/*")
 public class ChartApiController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
-    public ChartApiController() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		JSONObject obj = new JSONObject();
+		
 		Gson gson = new Gson();
-		ChartData chartdata = new ChartData();
+		String path = (request.getPathInfo() == null)? "": request.getPathInfo();
+		ChartData chartdata = null;
+		if(path.equals("credit"))
+		{
+			new ChartData("credit");
+		}
+		else
+		{
+			new ChartData("debit");
+		}
+		
+		
 		String json = gson.toJson(chartdata);
 		response.getWriter().append(json);
 	}

@@ -107,5 +107,17 @@ public class Expense {
 		return ExpenseDAO.getExpenseByDuration(user, duration);
 	}
 	
+	public static Expense getById(User use, int id)
+	{
+		return ExpenseDAO.getById(use, id);
+	}
+	public static boolean deleteExpense(int id)
+	{
+		return ExpenseDAO.deleteById(id);
+	}
 	
+	public static boolean editExpense(User user, double amount, String description, String category, String date, String time, String transaction_type, int id)
+	{
+		return ExpenseDAO.editExpense(user, amount, description, category, date, time, transaction_type, id);
+	}
 }

@@ -25,7 +25,7 @@ catch(NullPointerException e)
 <link rel="stylesheet" href="/ExpenseTracker/static_content/common_style.css">
 <meta name="google-signin-client_id" content="468780636025-b72el8e52v8rugf6pu8fag5m0rgpuo3p.apps.googleusercontent.com">
 
-<title>Insert title here</title>
+<title>${title}</title>
 </head>
 <body>	
 	
@@ -60,7 +60,7 @@ catch(NullPointerException e)
 			add icon
 			<span>add new expense</span>
 			</a>
-			<a href="./History">
+			<a href="./Search">
 			History icon
 			<span>view transaction history</span>
 			</a>
