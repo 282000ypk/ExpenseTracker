@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,9 +37,18 @@ public class DashboardController extends HttpServlet {
 				if(path.equals("/History"))
 				{
 					request.setAttribute("title", "Transaction History");
-					// more code for filter
 					String duration = (request.getParameter("duration") == null)? "day" : (request.getParameter("duration"));
+					String key = (request.getParameter("key") == null)? "" : (request.getParameter("key"));
 					ArrayList<Expense> allexpense = Expense.getExpenseByDuration(user, duration);
+					Iterator<Expense> iterator = allexpense.iterator();
+					while(iterator.hasNext() && !key.equals(""))
+					{
+						if(!iterator.next().toString().toLowerCase().contains(key.toLowerCase()))
+						{
+							iterator.remove();
+						}
+					}
+					
 					request.setAttribute("transactions", allexpense);
 					duration = (duration.equals("day"))? "Today": duration;
 					duration = (duration.equals("week"))? "This Week": duration;
@@ -51,8 +61,6 @@ public class DashboardController extends HttpServlet {
 				if(path.equals("/Search"))
 				{
 					request.setAttribute("title", "Search Transactions");
-					ArrayList<Expense> this_month_expense = Expense.getExpenseByDuration(user, "month");
-					request.setAttribute("Expense", this_month_expense);
 					RequestDispatcher dispatcher = request.getRequestDispatcher("/search.jsp");
 					dispatcher.forward(request, response);
 					return;

@@ -1,40 +1,33 @@
 package com.expense.dashboard;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Random;
 
 import com.expense.expense.Expense;
 import com.expense.user.User;
 import com.google.gson.Gson;
 
 public class Data {
-	private ArrayList<String> labels;
+	private HashSet<String> labels;
 	private ArrayList<Dataset> datasets;
 	
-	public Data() {
-		this.labels = new ArrayList<String>();
-			this.labels.add("Red");
-			this.labels.add("Blue");
-			this.labels.add("Yellow");
-			this.labels.add("Green");
-			this.labels.add("Purple");
-			this.labels.add("Orange");
+	public Data(User user, String duration, String type) {
 		this.datasets = new ArrayList<Dataset>();
-			this.datasets.add(new Dataset());
+		Dataset temp_dataset = new Dataset(user, duration, type);
+		this.labels = temp_dataset.category_list;
+		this.datasets.add(temp_dataset);
 	}
 	
-	public static Data getUsersCurrentMonthData(User user)
-	{
-		Data data = new Data();
-		data.setLabels(Expense.getCategories(user));
-		// data.setDatasets();
-		return data;
-	}
-	
-	public ArrayList<String> getLabels() {
+	public HashSet<String> getLabels() {
 		return labels;
 	}
 
-	public void setLabels(ArrayList<String> labels) {
+	public void setLabels(HashSet<String> labels) {
 		this.labels = labels;
 	}
 
@@ -45,44 +38,63 @@ public class Data {
 	public void setDatasets(ArrayList<Dataset> datasets) {
 		this.datasets = datasets;
 	}
+	
 	@Override
 	public String toString() {
-		return new Gson().toJson(this);
+		return "Data [labels=" + labels + ", datasets=" + datasets + "]";
 	}
-	
-	
+
+
+
 	// sub class dataset
 	public class Dataset
 	{
 		private String label;
-		private ArrayList<Integer> data;
+		private ArrayList<Double> data;
 		private ArrayList<String> backgroundColor;
 		private ArrayList<String> borderColor;
 		private int borderWidth;
+		public HashSet<String> category_list;
 		
-		public Dataset() {
-			this.label = "# of Votes";
-			this.data = new ArrayList<Integer>();
-				this.data.add(12);
-				this.data.add(9);
-				this.data.add(3);
-				this.data.add(5);
-				this.data.add(2);
-				this.data.add(3);
+		public Dataset(User user, String duration, String type) {
+			this.label = "# total transactions";
+			this.data = new ArrayList<Double>();
 			this.backgroundColor = new ArrayList<String>();
-				this.backgroundColor.add("rgba(255, 99, 132, 0.2)");
-				this.backgroundColor.add("rgba(54, 162, 235, 0.2)");
-				this.backgroundColor.add("rgba(255, 206, 86, 0.2)");
-				this.backgroundColor.add("rgba(75, 192, 192, 0.2)");
-				this.backgroundColor.add("rgba(153, 102, 255, 0.2)");
-				this.backgroundColor.add("rgba(255, 159, 64, 0.2)");
 			this.borderColor = new ArrayList<String>();
-				this.borderColor.add("rgba(255, 99, 132, 1)");
-				this.borderColor.add("rgba(54, 162, 235, 1)");
-				this.borderColor.add("rgba(255, 206, 86, 1)");
-				this.borderColor.add("rgba(75, 192, 192, 1)");
-				this.borderColor.add("rgba(153, 102, 255, 1)");
-				this.borderColor.add("rgba(255, 159, 64, 1)");
+			ArrayList<Expense> expense_list = Expense.getExpenseByDuration(user, duration);
+			HashMap<String, Double> category_total = new HashMap<String, Double>();
+			this.category_list = new HashSet<String>();
+			for(Expense expense: expense_list)
+			{
+				String temp_type = expense.getTransaction_type();
+				String temp_category = expense.getCategory();
+				Double temp_amount = expense.getAmount();
+				Double temp_map_amount = (category_total.get(temp_category) == null)? 0.0 : category_total.get(temp_category);
+				
+				if(temp_type.equals(type))
+				{
+					category_total.put(temp_category, (temp_map_amount + temp_amount));
+					this.category_list.add(temp_category);
+				}
+				//System.out.println("type=" + temp_type + " category=" + temp_category + " amount=" + temp_amount + " Map_amount=" + temp_map_amount + "\n" + category_total + "\n");
+			}
+			
+			int red, green, blue;
+			for(String category: this.category_list)
+			{
+				this.data.add((category_total.get(category) == null)? 1.0 : (Double)category_total.get(category));
+				
+				red = (int)new Random().nextInt(255 - 0) + 0;
+				green = (int)new Random().nextInt(255 - 0) + 0;
+				blue = (int)new Random().nextInt(255 - 0) + 0;
+				
+				this.backgroundColor.add("rgba(" + red + ", " + green + ", " + blue + ", 0.2)");
+				this.borderColor.add("rgba(" + red + ", " + green + ", " + blue + ", 1)");
+			}
+			/*System.out.println(expense_list);
+			System.out.println(category_total);
+			System.out.println(category_list);*/
+			
 			this.borderWidth = 1;
 		}
 
@@ -94,11 +106,11 @@ public class Data {
 			this.label = label;
 		}
 
-		public ArrayList<Integer> getData() {
+		public ArrayList<Double> getData() {
 			return data;
 		}
 
-		public void setData(ArrayList<Integer> data) {
+		public void setData(ArrayList<Double> data) {
 			this.data = data;
 		}
 
@@ -125,17 +137,15 @@ public class Data {
 		public void setBorderWidth(int borderWidth) {
 			this.borderWidth = borderWidth;
 		}
-	}
+		
 
-
-	public static Data getCredits() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public static Data getDebits() {
-		// TODO Auto-generated method stub
-		return null;
+		@Override
+		public String toString() {
+			return "\nDataset [label=" + label + ", \ndata=" + data + ", \nbackgroundColor=" + backgroundColor
+					+ ", \nborderColor=" + borderColor + ", \nborderWidth=" + borderWidth + "]";
+		}
+		
+		
 	}
 	
 }

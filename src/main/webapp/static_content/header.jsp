@@ -43,15 +43,24 @@ catch(NullPointerException e)
         gapi.auth2.init();
       });
     }   
+    
+    function expand_nav()
+    {
+    	var nav = document.querySelector("Header > nav");
+    	nav.classList.toggle("expand_nav");
+    }
+    
   </script>
   <script src="https://apis.google.com/js/platform.js?onload=onLoad"></script>
 	<header>
 		<a href = "/ExpenseTracker/Dashboard/"><img src = "/ExpenseTracker/static_content/images/logo.png"></a>
+		<img class="nav_icon" onclick="expand_nav()">
 		<div class = "user_info">
 			<span><span>Hi</span><span>${user.getName().split(" ")[0]}</span></span>
 			<img alt ="${user.getName()}" src = "${user.getProfile_pic_url()}">
 		</div>
 		<nav>
+			<img src="" onclick="expand_nav()">
 			<a href="./">
 			Dashboard icon
 			<span>Go to Dashboard</span>
@@ -61,8 +70,8 @@ catch(NullPointerException e)
 			<span>add new expense</span>
 			</a>
 			<a href="./Search">
-			History icon
-			<span>view transaction history</span>
+			Search icon
+			<span>Search and Filter transaction</span>
 			</a>
 			<a href="./Overview">
 			Overview icon

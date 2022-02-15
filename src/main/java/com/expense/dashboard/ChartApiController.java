@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 
@@ -20,22 +21,32 @@ public class ChartApiController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		Gson gson = new Gson();
-		String path = (request.getPathInfo() == null)? "": request.getPathInfo();
-		ChartData chartdata = null;
-		if(path.equals("credit"))
+		HttpSession httpsession = request.getSession(false);
+		try 
 		{
-			new ChartData("credit");
+			if(httpsession != null)
+			{
+				if(httpsession.getAttribute("user") == null)
+				{
+					response.getWriter().append("null");
+					return;
+				}
+			}
+		
+			User user = (User) httpsession.getAttribute("user");
+			
+			Gson gson = new Gson();
+			String type = (request.getParameter("type") == null)? "credit": request.getParameter("type");
+			String duration = (request.getParameter("duration") == null)? "all": request.getParameter("duration");
+			ChartData chartdata = new ChartData(user, duration, type);
+			String json = gson.toJson(chartdata);
+			response.getWriter().append(json);
 		}
-		else
+		catch(Exception e)
 		{
-			new ChartData("debit");
+			e.printStackTrace();
+			return;
 		}
-		
-		
-		String json = gson.toJson(chartdata);
-		response.getWriter().append(json);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

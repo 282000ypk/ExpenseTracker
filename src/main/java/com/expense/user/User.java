@@ -9,6 +9,7 @@ public class User {
 	private String name;
 	private String email;
 	private String profile_pic_url;
+	private String action;
 	
 	public User()
 	{
@@ -16,28 +17,40 @@ public class User {
 		this.name = null;
 		this.email = null;
 		this.profile_pic_url = null;
+		this.action = null;
 	}
 	
-	public static boolean create(String id, String name, String email, String profile_pic_url)
+	public static boolean create(String id, String name, String email, String profile_pic_url, String action)
 	{
 		User user = new User();
 		user.setId(id);
 		user.setName(name);
 		user.setEmail(email);
 		user.setProfile_pic_url(profile_pic_url);
+		user.setAction(action);
 		
 		if(userDAO.create(user))
 			return true;
 		return false;
 	}
 	
-	public static boolean create(String id, String name, String email, String profile_pic_url, String password)
+	
+	public String getAction() {
+		return (action == null)? "" : action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
+	public static boolean create(String id, String name, String email, String profile_pic_url, String password, String action)
 	{
 		User user = new User();
 		user.setId(id);
 		user.setName(name);
 		user.setEmail(email);
 		user.setProfile_pic_url(profile_pic_url);
+		user.setAction(action);
 		
 		if(userDAO.create(user) && userDAO.createLogin(user, password))
 			return true;

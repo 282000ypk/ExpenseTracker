@@ -41,6 +41,17 @@ public class userDAO {
 		finally
 		{
 			DBCon.close();
+			try
+			{
+				if(userDAO.con!=null)
+				{
+					userDAO.con.close();
+				}
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}	
 		}
 	}
 	
@@ -65,7 +76,17 @@ public class userDAO {
 		finally
 		{
 			DBCon.close();
-			
+			try
+			{
+				if(userDAO.con!=null)
+				{
+					userDAO.con.close();
+				}
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}	
 		}
 	}
 	
@@ -84,6 +105,7 @@ public class userDAO {
 				user.setEmail(rs.getString(2));
 				user.setName(rs.getString(3));
 				user.setProfile_pic_url(rs.getString(4));
+				user.setAction(rs.getString(5));
 			}
 			return user;
 		}
@@ -95,7 +117,17 @@ public class userDAO {
 		finally
 		{
 			DBCon.close();
-			
+			try
+			{
+				if(userDAO.con!=null)
+				{
+					userDAO.con.close();
+				}
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}	
 		}
 	}
 	public static boolean createLogin(User user, String password)
@@ -139,6 +171,17 @@ public class userDAO {
 			}
 			// if anything goes wrong retur false
 			DBCon.close();
+			try
+			{
+				if(userDAO.con!=null)
+				{
+					userDAO.con.close();
+				}
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}	
 			return false;
 			
 		}
@@ -151,6 +194,17 @@ public class userDAO {
 		finally
 		{
 			DBCon.close();
+			try
+			{
+				if(userDAO.con!=null)
+				{
+					userDAO.con.close();
+				}
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}	
 		}
 	}
 	public static boolean create(User user) {
@@ -158,11 +212,12 @@ public class userDAO {
 		try
 		{
 			userDAO.con = DBCon.getConnection();
-			PreparedStatement st = userDAO.con.prepareStatement("insert into et_user values(?,?,?,?)");
+			PreparedStatement st = userDAO.con.prepareStatement("insert into et_user values(?,?,?,?,?)");
 			st.setString(1, user.getId());
 			st.setString(2, user.getEmail());
 			st.setString(3, user.getName());
 			st.setString(4, user.getProfile_pic_url());
+			st.setString(5, user.getAction());
 			
 			if(0 != st.executeUpdate())
 			{
@@ -178,6 +233,89 @@ public class userDAO {
 		finally
 		{
 			DBCon.close();
+			try
+			{
+				if(userDAO.con!=null)
+				{
+					userDAO.con.close();
+				}
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}	
+		}
+	}
+
+	public static boolean setAction(User user, String action) {
+		try
+		{
+			userDAO.con = DBCon.getConnection();
+			PreparedStatement st = userDAO.con.prepareStatement("update et_user set action = ? where email = ?");
+			st.setString(1, action);
+			st.setString(2, user.getEmail());
+			
+			if(0 != st.executeUpdate())
+			{
+				return true;
+			}
+			return false;
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+			return false;
+		}
+		finally
+		{
+			DBCon.close();
+			try
+			{
+				if(userDAO.con!=null)
+				{
+					userDAO.con.close();
+				}
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}	
+		}
+		
+	}
+
+	public static boolean updateLogin(User user, String one_time_password) {
+		try
+		{
+			userDAO.con = DBCon.getConnection();
+			PreparedStatement st = userDAO.con.prepareStatement("delete from et_login where email = ?");
+			st.setString(1, user.getEmail());
+			st.executeUpdate();
+			if(userDAO.createLogin(user, one_time_password))
+			{
+				return true;
+			}
+			return false;
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+			return false;
+		}
+		finally
+		{
+			DBCon.close();
+			try
+			{
+				if(userDAO.con!=null)
+				{
+					userDAO.con.close();
+				}
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}	
 		}
 	}
 }

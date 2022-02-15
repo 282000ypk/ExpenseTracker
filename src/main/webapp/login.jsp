@@ -21,6 +21,7 @@ Password<input type="password" name="password">
 	<input type="hidden" name="name" id="google_name">
 	<input type="hidden" name="profile_pic_url" id="google_profile_pic_url">
 </form>
+<a href="/ExpenseTracker/ForgetPassword">Forget Password</a>
 
  <script type="text/javascript">
       function onSignIn(googleUser) 

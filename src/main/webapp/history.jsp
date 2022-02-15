@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="com.expense.expense.Expense" %>
 <style>
 .credit
 {
@@ -13,8 +14,10 @@ color: red;
 </style>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 	<%if( ((ArrayList)request.getAttribute("transactions")).size() == 0 ) { %>
-	<h2>No Transactions Made ${duartion}</h2>
-	<%} %>
+	<h2>No Transactions Found</h2>
+	<%
+	}
+	%>
 	<c:forEach items="${transactions }" var="transaction">
 		<div class="card">
 		<a href="/ExpenseTracker/Dashboard/edit?id=${transaction.getId()}">Edit Logo</a>

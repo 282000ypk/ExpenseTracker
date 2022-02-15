@@ -15,11 +15,6 @@ public class ExpenseDAO {
 	
 	private static Connection con = DBCon.getConnection();
 	
-	public ExpenseDAO()
-	{
-		ExpenseDAO.con = DBCon.getConnection();
-	}
-	
 	public static ArrayList<Expense> getAllExpense(User user) 
 	{
 		ExpenseDAO.con = DBCon.getConnection();
@@ -28,7 +23,7 @@ public class ExpenseDAO {
 		{
 			Statement st = ExpenseDAO.con.createStatement();
 			Expense expense = null;
-			ResultSet rs = st.executeQuery("select id, amount, date, time, description, category, transaction_type from et_expense where user_id = '"+ user.getId() +"'");
+			ResultSet rs = st.executeQuery("select id, amount, date, time, description, category, transaction_type from et_expense where user_id = '"+ user.getId() +"' order by date desc, time desc");
 			while(rs.next())
 			{
 				int id = Integer.parseInt(rs.getString(1));
@@ -52,6 +47,17 @@ public class ExpenseDAO {
 		finally
 		{
 			DBCon.close();
+			try
+			{
+				if(ExpenseDAO.con!=null)
+				{
+					ExpenseDAO.con.close();
+				}
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}	
 		}
 	}
 	
@@ -61,7 +67,7 @@ public class ExpenseDAO {
 		ExpenseDAO.con = DBCon.getConnection();
 		
 		String debit_for_month_query = "select sum(amount) from et_expense where user_id = '" + user.getId() + "' and transaction_type = 'debit' and date between date_trunc('month', current_date) and date_trunc('month', current_date) + interval '1 month'";
-		String credit_for_month_query = "select sum(amount) from et_expense where user_id = '\" + user.getId() + \"' and transaction_type = 'credit' and date between date_trunc('month', current_date) and date_trunc('month', current_date) + interval '1 month'";
+		String credit_for_month_query = "select sum(amount) from et_expense where user_id = '" + user.getId() + "' and transaction_type = 'credit' and date between date_trunc('month', current_date) and date_trunc('month', current_date) + interval '1 month'";
 		String debit_for_week_query = "select sum(amount) from et_expense where user_id = '" + user.getId() + "' and transaction_type = 'debit' and date between date_trunc('week', current_date) and date_trunc('week', current_date) + interval '1 week'";
 		String credit_for_week_query = "select sum(amount) from et_expense where user_id = '" + user.getId() + "' and transaction_type = 'credit' and date between date_trunc('week', current_date) and date_trunc('week', current_date) + interval '1 week'";
 		String debit_for_today_query = "select sum(amount) from et_expense where user_id = '" + user.getId() + "' and transaction_type = 'debit' and date = current_date";
@@ -101,6 +107,17 @@ public class ExpenseDAO {
 		finally
 		{
 			DBCon.close();
+			try
+			{
+				if(ExpenseDAO.con!=null)
+				{
+					ExpenseDAO.con.close();
+				}
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}	
 		}
 	}
 	
@@ -131,6 +148,17 @@ public class ExpenseDAO {
 		finally
 		{
 			DBCon.close();
+			try
+			{
+				if(ExpenseDAO.con!=null)
+				{
+					ExpenseDAO.con.close();
+				}
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}	
 		}
 	}
 	
@@ -157,6 +185,17 @@ public class ExpenseDAO {
 		finally
 		{
 			DBCon.close();
+			try
+			{
+				if(ExpenseDAO.con!=null)
+				{
+					ExpenseDAO.con.close();
+				}
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}	
 		}
 	}
 	
@@ -171,19 +210,27 @@ public class ExpenseDAO {
 			String query;
 			if(duration.equals("day"))
 			{
-				query = "select id, amount, date, time, description, category, transaction_type from et_expense where date = current_date and user_id = '" + user.getId() + "' order by date ,time desc";
+				query = "select id, amount, date, time, description, category, transaction_type from et_expense where date = current_date and user_id = '" + user.getId() + "' order by date desc, time desc";
 			}
 			else if(duration.equals("week"))
 			{
-				query = "select id, amount, date, time, description, category, transaction_type from et_expense where date between date_trunc('week', current_date) and date_trunc('week', current_date) + interval '1 week' and user_id = '" + user.getId() + "' order by date ,time desc;";
+				query = "select id, amount, date, time, description, category, transaction_type from et_expense where date between date_trunc('week', current_date) and date_trunc('week', current_date) + interval '1 week' and user_id = '" + user.getId() + "' order by date desc, time desc;";
 			}
 			else if(duration.equals("month"))
 			{
-				query = "select id, amount, date, time, description, category, transaction_type from et_expense where date between date_trunc('month', current_date) and date_trunc('month', current_date) + interval '1 month' and user_id = '" + user.getId() + "' order by date ,time desc;";
+				query = "select id, amount, date, time, description, category, transaction_type from et_expense where date between date_trunc('month', current_date) and date_trunc('month', current_date) + interval '1 month' and user_id = '" + user.getId() + "' order by date desc, time desc;";
+			}
+			else if(duration.equals("last_three_month"))
+			{
+				query = "select id, amount, date, time, description, category, transaction_type from et_expense where date between date_trunc('month', current_date) - interval '3 month' and date_trunc('month', current_date) + interval '1 month' and user_id = '" + user.getId() + "' order by date desc, time desc;";
+			}
+			else if(duration.equals("last_six_month"))
+			{
+				query = "select id, amount, date, time, description, category, transaction_type from et_expense where date between date_trunc('month', current_date) - interval '6 month' and date_trunc('month', current_date) + interval '1 month' and user_id = '" + user.getId() + "' order by date desc, time desc;";
 			}
 			else
 			{
-				query = "select id, amount, date, time, description, category, transaction_type from et_expense where user_id = '"+ user.getId() +"'";
+				query = "select id, amount, date, time, description, category, transaction_type from et_expense where user_id = '"+ user.getId() +"' order by date desc, time desc";
 			}
 			ResultSet rs = st.executeQuery(query);
 			while(rs.next())
@@ -210,6 +257,17 @@ public class ExpenseDAO {
 		finally
 		{
 			DBCon.close();
+			try
+			{
+				if(ExpenseDAO.con!=null)
+				{
+					ExpenseDAO.con.close();
+				}
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}	
 		}
 	}
 	
@@ -243,6 +301,17 @@ public class ExpenseDAO {
 		finally
 		{
 			DBCon.close();
+			try
+			{
+				if(ExpenseDAO.con!=null)
+				{
+					ExpenseDAO.con.close();
+				}
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}	
 		}
 	}
 	
@@ -268,6 +337,17 @@ public class ExpenseDAO {
 		finally
 		{
 			DBCon.close();
+			try
+			{
+				if(ExpenseDAO.con!=null)
+				{
+					ExpenseDAO.con.close();
+				}
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}	
 		}
 	}
 
@@ -298,6 +378,17 @@ public class ExpenseDAO {
 		finally
 		{
 			DBCon.close();
+			try
+			{
+				if(ExpenseDAO.con!=null)
+				{
+					ExpenseDAO.con.close();
+				}
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}	
 		}
 	}
 } 

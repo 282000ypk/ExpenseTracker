@@ -33,12 +33,19 @@ public class LoginController extends HttpServlet {
 			
 			User user = User.getbyemail(user_name);
 			
-			if(user!=null)
+			if(user != null)
 			{
 				if(user.authenticate(password))
 				{
 					HttpSession httpsession = request.getSession();
 					httpsession.setMaxInactiveInterval(3600);
+					httpsession.setAttribute("user", user);
+					if(user.getAction().equals("reset"))
+					{
+						dispatcher = request.getRequestDispatcher("/resetpassword.jsp");
+						dispatcher.forward(request, response);
+						return;
+					}
 					httpsession.setAttribute("user", user);
 					response.sendRedirect("/ExpenseTracker/Dashboard/");
 					return;
@@ -51,6 +58,7 @@ public class LoginController extends HttpServlet {
 					return;
 				}
 			}
+			
 			else
 			{
 				request.setAttribute("message", "User Not Found");
@@ -68,7 +76,7 @@ public class LoginController extends HttpServlet {
 			{
 				String name = request.getParameter("name");
 				String profile_pic_url = request.getParameter("profile_pic_url");
-				if(User.create(email, name, email, profile_pic_url))
+				if(User.create(email, name, email, profile_pic_url, "google"))
 				{
 					user = User.getbyemail(email);
 					HttpSession httpsession = request.getSession();

@@ -36,7 +36,7 @@ public class RegistrationController extends HttpServlet {
 			}
 			else
 			{
-				if(User.create(id, name, email, profile_pic_url, password))
+				if(User.create(id, name, email, profile_pic_url, password, ""))
 				{
 					request.setAttribute("message", "Registration Successfull PLease login with the credentials created");
 					HttpSession httpsession = request.getSession();
