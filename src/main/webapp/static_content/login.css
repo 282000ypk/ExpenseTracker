@@ -1,0 +1,96 @@
+*
+{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+body
+{
+    background-color: #222;
+    color: white;
+}
+.container
+{
+    display: flex;
+    width: 100vw;
+    align-content: center;
+    flex-wrap: wrap;
+    padding: 0px clamp(10px, 10vw, 20vw);
+}
+.container > h1
+{
+    flex: 1 1 100%;
+}
+.container > a
+{
+	text-decoration: none;
+	text-align: center;
+	font-weight: 444;
+	border-radius: 5px;
+	padding: 5px;
+	width: 250px;
+	background: white;
+	color: black;
+}
+.container > p
+{
+	flex: 1 1 100%;
+	margin: 10px 0px;
+}
+.data
+{
+    flex: 1 1 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    min-height: 60vh;
+    padding: 0px;
+}
+.data > p
+{
+	color: red;
+	font-size: 1.3em;
+}
+
+.data > h2
+{
+	flex: 1 1 100%;
+	color: #fccf31;
+}
+.data .g-box
+{
+	flex: 1 1 100%;
+}
+.data label, input
+{
+	font-size: 1.2em;
+    flex: 1 1 100%;
+}
+
+.data input
+{
+	background: transparent;
+	outline: none;
+	border: none;
+	border-bottom: 2px solid white;
+	color: white;
+	font-size: 1.5em;
+}
+.data input[type="submit"]
+{
+	font-size: 1em;
+	flex: 0 1 250px;
+	text-align: center;
+	font-weight: 444;
+	border-radius: 5px;
+	padding: 5px;
+	background: white;
+	color: black;
+}
+@media(max-width:500px)
+{
+	.container
+	{
+		padding: max(20px, 10vw);
+	}	
+}

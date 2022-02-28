@@ -1,0 +1,55 @@
+.container
+{
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	padding: 20px 10vw;
+}
+.container > form
+{
+	display: flex;
+	flex-wrap: wrap;
+}
+.container label
+{
+	cursor: pointer;
+}
+.container label, input, h3
+{
+	flex: 1 1 100%;
+	padding: 10px;
+}
+.container input[type="radio"]
+{
+	visibility: hidden;
+}
+.container input[type="radio"] + label
+{
+	border: 2px solid white;
+	border-radius: 5px;
+}
+.container input[type="radio"]:checked + label
+{
+	background: white;
+	color: black;
+	border-radius: 5px;
+}
+
+.container input[type="date"]::-webkit-calendar-picker-indicator, input[type="time"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 2px;
+  opacity: 0.6;
+  filter: invert(0.8);
+}
+
+.container input[type="date"]::-webkit-calendar-picker-indicator, input[type="time"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1
+}
+@media(max-width:500px)
+{
+	.container
+	{
+		padding: max(20px, 10vw);
+	}	
+}

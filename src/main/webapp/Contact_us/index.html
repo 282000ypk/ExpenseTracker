@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/ExpenseTracker/static_content/contactus.css">
+	<link rel="stylesheet" href="/ExpenseTracker/static_content/common_style.css">
+	
+	<title>Document</title>
+	
+</head>
+<body>
+	<div id="result" class="">
+		
+	</div>
+	<header>
+		<a href = "#"><img src = "/ExpenseTracker/static_content/images/logo.png"></a>
+	</header>
+	
+	<div class="container">
+		
+		<div class="data">
+			<h1>How can we help you?</h1>
+			<p>Write us a message and we will revert you back as soon as possible</p>
+			<label for="name">Name</label>
+			<input type="text" id="name" name="name" required>
+			<label for="message">Message</label>
+			<textarea id="message" name="message" required rows=10 cols=10>
+			</textarea>
+			<button onclick="sendemail()" class="input_submit">Send</button>
+			<span id="loading" class=""></span>
+		</div>
+	</div>
+	<script>
+		async function sendemail()
+		{
+			document.getElementById("loading").classList.add("loading");
+			var name = document.getElementById("name").value;
+			var message = document.getElementById("message").value;
+			let data = {'name': name, 'message': message}
+			await fetch('/ExpenseTracker/SendMessage?name='+name+"&message="+message)
+			.then(response=>response.json())
+			.then(data=>{
+					document.getElementById("result").classList.add("alert");
+					
+					if(data.status == 0)
+					{
+						document.getElementById("result").style.animation = "show 3.5s linear";
+						document.getElementById("result").classList.add("success");
+						document.getElementById("result").innerHTML = "Your Message sent Successfully";
+						document.getElementById("loading").classList.remove("loading");
+						document.getElementById("name").value = "";
+						document.getElementById("message").value = "";
+						
+					}
+					else
+					{
+						document.getElementById("result").style.animation = "show 3.5s linear";
+						document.getElementById("result").classList.add("failure");
+						document.getElementById("result").innerHTML = "Oops! failed to send your message. PLease try again later";
+						document.getElementById("loading").classList.remove("loading");
+						
+					}
+				})
+		}
+		
+		
+	</script>
+	<footer>
+	<div>
+		
+		<a href = "/ExpenseTracker/Dashboard/">Dashboard</a>
+		<a href = "/ExpenseTracker/Login/">Login</a>
+		<a href = "/ExpenseTracker/Registration/Register/">Register</a>
+	</div>
+	<p>Made By @Yogesh Kamble - 2022</p>
+	</footer>
+</body>
+</html>

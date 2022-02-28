@@ -1,0 +1,65 @@
+.container
+{
+    display: flex;
+    width: 100vw;
+    align-content: center;
+    flex-wrap: wrap;
+    padding: 0px clamp(10px, 10vw, 20vw);
+    overflow-x: hidden;
+}
+.box1
+{
+	
+}
+.box1, .actions
+{
+	flex: 1 1 100%;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	margin: 10px 0px;
+}
+.box1 > img
+{
+	height: 200px;
+	width: 200px;
+	border-radius: 50%;
+	object-fit: cover;
+	margin: 10px 0px;
+}
+.details
+{
+	
+	display: flex;
+	flex-wrap: wrap;
+	padding: 20px;
+}
+.details > *
+{
+	flex: 1 1 100%;
+	margin: 5px 0px;
+}
+.box1 input[type="file"]
+{
+	width: 100%;		
+}
+.box1 h1, h3, label
+{
+	flex: 1 1 100%;
+}
+.box1 > h1
+{
+	color: #fccf31;
+	text-transform: capitalize;
+}
+.actions > label, input
+{
+	flex: 1 1 100%;
+}
+@media(max-width:500px)
+{
+	.container
+	{
+		padding: max(20px, 10vw);
+	}	
+}

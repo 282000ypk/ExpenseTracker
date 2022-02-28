@@ -1,0 +1,27 @@
+.container
+{
+	padding: 20px 10vw;
+	display: flex;
+	flex-wrap: wrap;
+}
+.container > h1
+{
+	flex: 1 1 100%;
+}
+.container > label, input, select
+{
+	flex: 1 1 100%;
+	margin: 5px;
+	padding: 5px;
+}
+.container > label
+{
+	color: #fccf31;
+}
+@media(max-width: 600px)
+{
+	.container
+	{
+		padding: 20px;
+	}
+}

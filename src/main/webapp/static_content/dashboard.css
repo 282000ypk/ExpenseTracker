@@ -1,0 +1,85 @@
+.dashboard-container
+{
+	width: 100vw;
+	display: flex;
+	padding: 20px 10vw;
+	flex-wrap: wrap;
+}
+.dashboard-container h1
+{
+	flex: 1 0 100%;
+}
+.box1
+{
+	flex: 1 1 100%;
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+}
+.box2
+{
+	flex: 1 1 100%;
+	padding: 10px;
+}
+
+
+/* box1 css*/
+.duration-card
+{
+	flex: 1 1 250px;
+	border-radius: 20px;
+	box-shadow: 0 0 5px white;
+	padding: 10px 20px;
+	margin: 20px;
+	cursor: pointer;
+	transition: 0.5s;
+}
+.duration-card:hover
+{
+	box-shadow: 0 0 10px white;
+	transform: scale(1.05);
+}
+.credit-box > p:last-child, .debit-box > p:last-child
+{
+	font-size: 2em;
+}
+.credit-box > p:last-child
+{
+	color: green;
+}
+.debit-box > p:last-child
+{
+	color: red;
+}
+
+.hide
+{
+	display: none;
+}
+.loading
+{
+	border: 5px solid white;
+	border-bottom: 5px solid transparent;
+	border-radius: 50%;
+	width: 100px;
+	height: 100px;
+	animation: rotate 2s linear infinite;
+}
+@keyframes rotate
+{
+	0%
+	{
+		transform: rotate(0deg);
+	}
+	100%
+	{
+		transform: rotate(360deg);
+	}
+}
+@media(max-width:500px)
+{
+	.dashboard-container
+	{
+		padding: 20px;
+	}	
+}

@@ -28,7 +28,9 @@ catch(NullPointerException e)
 <title>${title}</title>
 </head>
 <body>	
-	
+	<div class="alert ${alert}">
+		${message}
+	</div>
 	<script>
     function SignOut() {
       var auth2 = gapi.auth2.getAuthInstance();
@@ -53,36 +55,34 @@ catch(NullPointerException e)
   </script>
   <script src="https://apis.google.com/js/platform.js?onload=onLoad"></script>
 	<header>
-		<a href = "/ExpenseTracker/Dashboard/"><img src = "/ExpenseTracker/static_content/images/logo.png"></a>
-		<img class="nav_icon" onclick="expand_nav()">
+		<a href = "#"><img src = "/ExpenseTracker/static_content/images/logo.png"></a>
+		<img class="nav_icon" onclick="expand_nav()" src="/ExpenseTracker/static_content/images/menu_icon.png">
 		<div class = "user_info">
 			<span><span>Hi</span><span>${user.getName().split(" ")[0]}</span></span>
-			<img alt ="${user.getName()}" src = "${user.getProfile_pic_url()}">
+			<a href="profile"><img alt ="${user.getName()}" src = "${user.getProfile_pic_url()}"></a>
 		</div>
 		<nav>
-			<img src="" onclick="expand_nav()">
-			<a href="./">
-			Dashboard icon
+			<img src="/ExpenseTracker/static_content/images/close_icon.png" onclick="expand_nav()" >
+			<a href="Dashboard" class="a_btn">
+			<img src="/ExpenseTracker/static_content/images/dashboard_icon.png">Dashboard
 			<span>Go to Dashboard</span>
 			</a>
-			<a href="./Newtransaction">
-			add icon
+			<a href="Newtransaction"  class="a_btn">
+			<img src="/ExpenseTracker/static_content/images/add_icon.png">New Transaction
 			<span>add new expense</span>
 			</a>
-			<a href="./Search">
-			Search icon
+			<a href="Search"  class="a_btn">
+			<img src="/ExpenseTracker/static_content/images/search_icon.png">Search
 			<span>Search and Filter transaction</span>
 			</a>
-			<a href="./Overview">
-			Overview icon
+			<a href="Overview"  class="a_btn">
+			<img src="/ExpenseTracker/static_content/images/overview_icon.png">Overview
 			<span>Analysis of all Transactions</span>
 			</a>
-			<a  href="/ExpenseTracker/Logout"  onclick="SignOut()">
-			Logout icon
+			<a  href="/ExpenseTracker/Logout"  onclick="SignOut()"  class="a_btn">
+			<img src="/ExpenseTracker/static_content/images/logout_icon.png">Logout
 			<span>Logout from this account</span>
 			</a>
 		</nav>
 	</header>
-	<div class="alert ${alert}">
-		${message}
-	</div>
+	

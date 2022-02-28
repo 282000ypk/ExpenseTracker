@@ -3,12 +3,16 @@
 	margin: 0px;
 	padding: 0px;
 	box-sizing: border-box;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 body
 {
 	min-height: 100vh;
 	position: relative;
-	padding-bottom: 200px;
+	padding-bottom: 180px;
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+	background: #222;
+	color: #fff;
 }
 
 header
@@ -18,16 +22,20 @@ header
 	padding: 10px;
 	display: flex;
 	justify-content: space-between;
-	background: #555;
+	background: #444;
 	color: white;
 	align-items: center;
 	flex-wrap: wrap;
-	border: 2px solid;
 	position: relative;
 }
 header > a
 {
 	flex: 1 1 30%;
+	height: 100px;
+}
+header > a > img
+{
+	height: 100%;
 }
 header > div
 {
@@ -41,10 +49,12 @@ header > div
 	flex-wrap: wrap;
 	position: relative;
 }
-header > div > img
+header > div > a > img
 {
+	text-transform: capatalize;
 	width: 70px;
 	height: 70px;
+	object-fit: cover;
 	border-radius: 50%;
 	margin: 5px;
 }
@@ -55,7 +65,7 @@ header > div > span
 }
 header > div > span > span:first-child
 {
-	font-size: 10px;
+	font-size: 15px;
 }
 header > div > span > span:last-child
 {
@@ -73,10 +83,10 @@ header nav
 
 header > nav > a
 {
-	test-decoration: none;
+	text-decoration: none;
 	color: white;
 	position: relative;
-	flex: 1 1 200px;
+	flex: 0 1 180px;
 	display: flex;
 	flex-flow: row;
 	justify-content: center;
@@ -91,29 +101,27 @@ header nav > img
 header > nav > a > span
 {
 	position: absolute;
-	top: -25px;
+	top: -50px;
+	min-height: 40px;
 	text-align: center;
 	visibility: hidden;
 	background: rgba(10,10,10, 0.7);
 	color: #fff;
 	width: auto;
 	border-radius: 10px;
-	padding: 3px;
+	padding: 5px 10px;
 }
-header > nav > a > span:before
-{
-	content: "";
-	position: absolute;
-	bottom: 0px;
-	border: 5px solid rgba(10,10,10, 0.7),
-			5px solid transparent,
-			5px solid transparent,
-			5px solid transparent;
-}
+
 header > nav > a:hover >  span
 {
 	visibility: visible;
 }
+header > nav img
+{
+	height: 1em;
+	margin: 0px 5px;
+}
+
 
 footer
 {
@@ -121,13 +129,18 @@ footer
 	width: 100%;
 	padding: 10px;
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-start;
 	align-items: center;
 	flex-wrap: wrap;
-	background: #555;
+	background: #444;
 	color: white;
 	position: absolute;
 	bottom: 0px;
+}
+footer > p
+{
+	flex: 1 1 100%;
+	text-align: center;
 }
 footer a
 {
@@ -142,15 +155,16 @@ footer a
 .alert
 {
 	position: absolute;
-	top: -30px;
-	left: 0px;
-	width: max(250px, 50vw, 50%);
+	top: -100px;
+	left: 25vw;
+	width: 50vw;
 	margin-left: auto;
 	margin-right: auto;
 	padding: 5px;
-	height: 25px;
-	animation: show 1s linear;
-	border-radius: 10px;
+	min-height: 25px;
+	animation: show 3.5s linear;
+	border-radius: 5px;
+	z-index: 1;
 }
 .success
 {
@@ -164,15 +178,19 @@ footer a
 {
 	0%
 	{
-		top: -30px; 
+		top: -100px; 
 	}
-	50%
+	10%
+	{
+		top: 30px;
+	}
+	90%
 	{
 		top: 30px;
 	}
 	100%
 	{
-		top: -30px;
+		top: -100px;
 	}
 }
 
@@ -182,13 +200,25 @@ footer a
 }
 @media(max-width: 700px)
 {
+	
+	.user_info > span
+	{
+		display: none;
+	}
+
+	header > nav > a
+	{
+		flex: 0 1 80%;
+	}
 	header > nav > img
 	{
 		display: flex;
-		height: 20px;
-		width: 20px;
-		background: yellow;
+		height: 30px;
+		width: 30px;
+		background: white;
+		border-radius: 10px;
 		position: absolute;
+		padding: 5px;
 		top: 5px;
 		right: 5px;
 		z-index: 2;
@@ -199,8 +229,8 @@ footer a
 		right: 100%;
 		top: 0px;
 		height: 100vh;
-		width: 90vw;
-		background: red;
+		width: 80vw;
+		background: #444;
 		z-index: 1;
 		justify-content: center;
 		padding: 10vh 0px;
@@ -209,15 +239,130 @@ footer a
 	{
 		display: flex;
 		position: absolute;
-		bottom: 10px;
+		bottom: 0px;
 		left: 10px;
-		height: 20px;
-		width: 20px;
-		background: red;
+		height: 25px;
+		width: 25px;
+		background: white;
+		border-radius: 10px;
 	}
 	.expand_nav
 	{
-		right: 10vw;
+		right: 20vw;
 		top: 0px;
 	}
+}
+
+.a_btn
+{
+	text-decoration: none;
+	text-align: center;
+	font-weight: 444;
+	border-radius: 5px;
+	padding: 5px;
+	width: 250px;
+	background: white;
+	color: black;
+}
+.input_submit
+{
+	font-size: 1em;
+	flex: 0 1 250px;
+	text-align: center;
+	font-weight: 444;
+	border-radius: 5px;
+	padding: 5px;
+	background: white;
+	color: black;
+}
+.input_text
+{
+	background: transparent;
+	outline: none;
+	border: none;
+	border-bottom: 2px solid white;
+	color: white;
+	font-size: 1.5em;
+}
+.history-box
+{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-content: center;
+}
+.history-card
+{
+	flex: 1 1 250px;
+	width: 100%;
+	border-radius: 10px;
+	box-shadow: 0px 0px 5px white;
+	padding: 10px;
+	margin: 10px;
+	display: flex;
+	flex-wrap: wrap;
+}
+.history-card > details
+{
+	flex: 1 1 100%;
+	box-shadow: 0 0 3px white;
+	padding: 5px;
+	margin: 5px;
+	border-radius: 5px;
+}
+.history-card > p
+{
+	flex: 1 1 100%;
+	padding: 3px;
+}
+
+.history-card > details p
+{
+	flex: 1 1 100%;
+	display: flex;
+	color: #fccf31;
+	margin: 5px 0px;
+}
+
+/* icons in card */
+.history-card > div
+{
+	flex: 1 1 100%;
+	display: flex;
+	align-items: center;
+}
+.history-card > div > a
+{
+	position: relative;
+	text-decoration: none;
+	background: white;
+	border-radius: 5px;
+	flex-wrap: wrap;
+	margin: 2px 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.history-card > div >a > img
+{
+	backgrond: white;
+	height: 1.5em;
+	min-width: 1.5em;
+	padding: 4px;
+}
+.history-card > div > a > span
+{
+	position: absolute;
+	top: -50px;
+	text-align: center;
+	background: rgba(10,10,10, 0.7);
+	visibility: hidden;
+	color: #fff;
+	width: auto;
+	border-radius: 10px;
+	padding: 3px;
+}
+.history-card > div > a:hover > span
+{
+	visibility: visible;
 }
